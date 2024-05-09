@@ -12,10 +12,12 @@ class MainPlaylistViewController: UIViewController {
     @IBOutlet weak var contentView: MainPlaylistView!
     var model: MainPlaylistModel!
     
+        
     override func viewDidLoad() {
         super.viewDidLoad()
         setupInitialState()
         model.loadData()
+        
     }
     
     private func setupInitialState() {
@@ -27,6 +29,8 @@ class MainPlaylistViewController: UIViewController {
         
         contentView.tableView.dataSource = self
         contentView.tableView.delegate = self
+        
+        
     }
 }
 
@@ -43,6 +47,11 @@ extension MainPlaylistViewController: MainPlaylistViewDelegate {
 
 extension MainPlaylistViewController: UITableViewDataSource {
     
+    func numberOfSections(in tableView: UITableView) -> Int {
+        
+        return 1
+    }
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return model.items.count
     }
@@ -53,8 +62,8 @@ extension MainPlaylistViewController: UITableViewDataSource {
             assertionFailure()
             return UITableViewCell()
         }
-        
         cell.textLabel?.text = model.items[indexPath.row].songTitle
+        cell.detailTextLabel?.text = model.items[indexPath.row].genre
         
         return cell
     }
